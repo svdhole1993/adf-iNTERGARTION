@@ -1,0 +1,22 @@
+{
+	"name": "gitdataset",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "azuregitlink",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "HttpServerLocation",
+				"relativeUrl": "/svdhole1993/StoreFile/blob/main/Sales_EAA.csv"
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": []
+	}
+}
