@@ -1,5 +1,5 @@
 {
-	"name": "copydatafromGithubvARAIBLE",
+	"name": "copydatafromGithubparapass",
 	"properties": {
 		"activities": [
 			{
@@ -52,7 +52,7 @@
 						"type": "DatasetReference",
 						"parameters": {
 							"Preletivegitlink": {
-								"value": "@variables('PsourceSiteReletive')",
+								"value": "@pipeline().parameters.pSOURCEPARA",
 								"type": "Expression"
 							}
 						}
@@ -64,7 +64,7 @@
 						"type": "DatasetReference",
 						"parameters": {
 							"Pfilename": {
-								"value": "@variables('Psinksitepara')",
+								"value": "@pipeline().parameters.pSinkPARA",
 								"type": "Expression"
 							}
 						}
@@ -72,14 +72,12 @@
 				]
 			}
 		],
-		"variables": {
-			"PsourceSiteReletive": {
-				"type": "String",
-				"defaultValue": "/svdhole1993/StoreFile/blob/main/Sales_EAA.csv"
+		"parameters": {
+			"pSOURCEPARA": {
+				"type": "string"
 			},
-			"Psinksitepara": {
-				"type": "String",
-				"defaultValue": "sales.csv"
+			"pSinkPARA": {
+				"type": "string"
 			}
 		},
 		"annotations": []
