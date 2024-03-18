@@ -5,12 +5,20 @@
 			"referenceName": "azuregitlink",
 			"type": "LinkedServiceReference"
 		},
+		"parameters": {
+			"Preletivegitlink": {
+				"type": "string"
+			}
+		},
 		"annotations": [],
 		"type": "DelimitedText",
 		"typeProperties": {
 			"location": {
 				"type": "HttpServerLocation",
-				"relativeUrl": "/svdhole1993/StoreFile/blob/main/Sales_EAA.csv"
+				"relativeUrl": {
+					"value": "@dataset().Preletivegitlink",
+					"type": "Expression"
+				}
 			},
 			"columnDelimiter": ",",
 			"escapeChar": "\\",
