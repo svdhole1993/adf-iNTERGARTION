@@ -657,7 +657,101 @@
 			]
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/copydatafromGithub')]",
+			"name": "[concat(parameters('factoryName'), '/copydatafromGithubparapass')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "copyfromgithubtoadls",
+						"type": "Copy",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "DelimitedTextSource",
+								"storeSettings": {
+									"type": "HttpReadSettings",
+									"requestMethod": "GET"
+								},
+								"formatSettings": {
+									"type": "DelimitedTextReadSettings"
+								}
+							},
+							"sink": {
+								"type": "DelimitedTextSink",
+								"storeSettings": {
+									"type": "AzureBlobFSWriteSettings"
+								},
+								"formatSettings": {
+									"type": "DelimitedTextWriteSettings",
+									"quoteAllText": true,
+									"fileExtension": ".txt"
+								}
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"typeConversion": true,
+								"typeConversionSettings": {
+									"allowDataTruncation": true,
+									"treatBooleanAsNumber": false
+								}
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "gitdataset",
+								"type": "DatasetReference",
+								"parameters": {
+									"Preletivegitlink": {
+										"value": "@pipeline().parameters.pSOURCEPARA",
+										"type": "Expression"
+									}
+								}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "azuregitadls",
+								"type": "DatasetReference",
+								"parameters": {
+									"Pfilename": {
+										"value": "@pipeline().parameters.pSinkPARA",
+										"type": "Expression"
+									}
+								}
+							}
+						]
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {}
+				},
+				"parameters": {
+					"pSOURCEPARA": {
+						"type": "string"
+					},
+					"pSinkPARA": {
+						"type": "string"
+					}
+				},
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/gitdataset')]",
+				"[concat(variables('factoryId'), '/datasets/azuregitadls')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/copydatafromGithubvARAIBLE')]",
 			"type": "Microsoft.DataFactory/factories/pipelines",
 			"apiVersion": "2018-06-01",
 			"properties": {
