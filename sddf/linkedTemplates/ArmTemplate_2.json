@@ -544,20 +544,40 @@
 							{
 								"referenceName": "gitdataset",
 								"type": "DatasetReference",
-								"parameters": {}
+								"parameters": {
+									"Preletivegitlink": {
+										"value": "@variables('PsourceSiteReletive')",
+										"type": "Expression"
+									}
+								}
 							}
 						],
 						"outputs": [
 							{
 								"referenceName": "azuregitadls",
 								"type": "DatasetReference",
-								"parameters": {}
+								"parameters": {
+									"Pfilename": {
+										"value": "@variables('Psinksitepara')",
+										"type": "Expression"
+									}
+								}
 							}
 						]
 					}
 				],
 				"policy": {
 					"elapsedTimeMetric": {}
+				},
+				"variables": {
+					"PsourceSiteReletive": {
+						"type": "String",
+						"defaultValue": "/svdhole1993/StoreFile/blob/main/Sales_EAA.csv"
+					},
+					"Psinksitepara": {
+						"type": "String",
+						"defaultValue": "sales.csv"
+					}
 				},
 				"annotations": []
 			},
