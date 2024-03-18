@@ -1,0 +1,56 @@
+{
+	"name": "gitdata",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "Git",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"fileName": "Sales_NA.csv",
+				"container": "procedure"
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": [
+			{
+				"name": "Employee_region",
+				"type": "String"
+			},
+			{
+				"name": "EmployeeFull name",
+				"type": "String"
+			},
+			{
+				"name": "Employee_id",
+				"type": "String"
+			},
+			{
+				"name": "EmployeeeCountry",
+				"type": "String"
+			},
+			{
+				"name": "Total_Sales",
+				"type": "String"
+			},
+			{
+				"name": "Avg_Sales",
+				"type": "String"
+			},
+			{
+				"name": "Min_Sales",
+				"type": "String"
+			},
+			{
+				"name": "MAx_Sales",
+				"type": "String"
+			}
+		]
+	}
+}
