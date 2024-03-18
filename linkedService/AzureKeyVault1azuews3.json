@@ -1,0 +1,11 @@
+{
+	"name": "AzureKeyVault1azuews3",
+	"type": "Microsoft.DataFactory/factories/linkedservices",
+	"properties": {
+		"annotations": [],
+		"type": "AzureKeyVault",
+		"typeProperties": {
+			"baseUrl": "https://svd123.vault.azure.net/"
+		}
+	}
+}

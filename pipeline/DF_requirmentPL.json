@@ -1,0 +1,52 @@
+{
+	"name": "DF_requirmentPL",
+	"properties": {
+		"activities": [
+			{
+				"name": "Requirment",
+				"type": "ExecuteDataFlow",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"dataflow": {
+						"referenceName": "Requirment",
+						"type": "DataFlowReference",
+						"parameters": {
+							"pminage": {
+								"value": "@pipeline().parameters.PminAge",
+								"type": "Expression"
+							},
+							"pmaxage": {
+								"value": "@pipeline().parameters.PMaxage",
+								"type": "Expression"
+							}
+						}
+					},
+					"compute": {
+						"coreCount": 8,
+						"computeType": "General"
+					},
+					"traceLevel": "Fine"
+				}
+			}
+		],
+		"parameters": {
+			"PminAge": {
+				"type": "string"
+			},
+			"PMaxage": {
+				"type": "string"
+			}
+		},
+		"annotations": [],
+		"lastPublishTime": "2024-03-14T10:22:56Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

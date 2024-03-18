@@ -1,0 +1,205 @@
+{
+	"name": "Requirment",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "customertxt",
+						"type": "DatasetReference"
+					},
+					"name": "Customer"
+				},
+				{
+					"dataset": {
+						"referenceName": "Payments",
+						"type": "DatasetReference"
+					},
+					"name": "Payments"
+				},
+				{
+					"dataset": {
+						"referenceName": "orders",
+						"type": "DatasetReference"
+					},
+					"name": "orders"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "FinalPayment_Details",
+						"type": "DatasetReference"
+					},
+					"name": "storePayemntdata"
+				}
+			],
+			"transformations": [
+				{
+					"name": "filteronpayments"
+				},
+				{
+					"name": "filteroncustomerage"
+				},
+				{
+					"name": "tansfromcust"
+				},
+				{
+					"name": "selectpayment"
+				},
+				{
+					"name": "selectorders"
+				},
+				{
+					"name": "joinorders"
+				},
+				{
+					"name": "joinorders1"
+				},
+				{
+					"name": "select1"
+				},
+				{
+					"name": "pivot1"
+				},
+				{
+					"name": "select2"
+				}
+			],
+			"scriptLines": [
+				"parameters{",
+				"     pminage as integer,",
+				"     pmaxage as integer",
+				"}",
+				"source(output(",
+				"          customer_id as string,",
+				"          Customerslastname as string,",
+				"          Customersfirstname as string,",
+				"          CustomersCountry as string,",
+				"          Customersage as float,",
+				"          Customersgender as string,",
+				"          Customersemail as string,",
+				"          Customersprofession as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> Customer",
+				"source(output(",
+				"          order_id as string,",
+				"          payment_id as string,",
+				"          type as string,",
+				"          descriptions as string,",
+				"          pDate as string,",
+				"          Status as string,",
+				"          Details as string,",
+				"          Total_Invoice as long,",
+				"          Due_Amount as long",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> Payments",
+				"source(output(",
+				"          order_id as string,",
+				"          customer_id as string,",
+				"          Store_id as string,",
+				"          Date as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> orders",
+				"Payments filter(Status!='errorr' && (notEquals(Status,\"refunded\"))) ~> filteronpayments",
+				"Customer filter(Customersage >=$pminage && Customersage<$pmaxage) ~> filteroncustomerage",
+				"filteroncustomerage select(mapColumn(",
+				"          customer_id,",
+				"          Customer_First_Name = Customersfirstname,",
+				"          Customer_Last_Name = Customerslastname,",
+				"          Customers_Country = CustomersCountry,",
+				"          Customer_Age = Customersage",
+				"     ),",
+				"     skipDuplicateMapInputs: false,",
+				"     skipDuplicateMapOutputs: true) ~> tansfromcust",
+				"filteronpayments select(mapColumn(",
+				"          payment_id,",
+				"          order_id,",
+				"          Status,",
+				"          Due_Amount,",
+				"          Total_Invoice",
+				"     ),",
+				"     skipDuplicateMapInputs: false,",
+				"     skipDuplicateMapOutputs: true) ~> selectpayment",
+				"orders select(mapColumn(",
+				"          order_id,",
+				"          customer_id,",
+				"          Date",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> selectorders",
+				"selectorders, tansfromcust join(selectorders@customer_id == tansfromcust@customer_id,",
+				"     joinType:'inner',",
+				"     matchType:'exact',",
+				"     ignoreSpaces: false,",
+				"     broadcast: 'auto')~> joinorders",
+				"joinorders, selectpayment join(selectorders@order_id == selectpayment@order_id,",
+				"     joinType:'inner',",
+				"     matchType:'exact',",
+				"     ignoreSpaces: false,",
+				"     broadcast: 'auto')~> joinorders1",
+				"joinorders1 select(mapColumn(",
+				"          customer_id = selectorders@customer_id,",
+				"          Date,",
+				"          Customer_First_Name,",
+				"          Customer_Last_Name,",
+				"          Customers_Country,",
+				"          Customer_Age,",
+				"          Status,",
+				"          Due_Amount,",
+				"          Total_Invoice",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> select1",
+				"select2 pivot(groupBy(customer_id,",
+				"          Date,",
+				"          Customer_First_Name,",
+				"          Customer_Last_Name,",
+				"          Customers_Country,",
+				"          Customer_Age,",
+				"          Total_Invoice),",
+				"     pivotBy(Status, ['received', 'not received']),",
+				"     Due_Amount = sum(Due_Amount),",
+				"     columnNaming: '$N$V',",
+				"     lateral: true) ~> pivot1",
+				"select1 select(mapColumn(",
+				"          customer_id,",
+				"          Date,",
+				"          Customer_First_Name,",
+				"          Customer_Last_Name,",
+				"          Customers_Country,",
+				"          Customer_Age,",
+				"          Status,",
+				"          Due_Amount,",
+				"          Total_Invoice",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> select2",
+				"pivot1 sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     partitionFileNames:['Final_Payment_Details'],",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     mapColumn(",
+				"          customer_id,",
+				"          Date,",
+				"          Customer_First_Name,",
+				"          Customer_Last_Name,",
+				"          Customers_Country,",
+				"          Customer_Age,",
+				"          Total_Invoice,",
+				"          Due_Amountreceived,",
+				"          {Due_Amountnot received}",
+				"     ),",
+				"     partitionBy('hash', 1)) ~> storePayemntdata"
+			]
+		}
+	}
+}

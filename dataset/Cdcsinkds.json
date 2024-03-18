@@ -1,0 +1,37 @@
+{
+	"name": "Cdcsinkds",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "SourceSqlAdventure",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "product_id",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "product_name",
+				"type": "varchar"
+			},
+			{
+				"name": "category",
+				"type": "varchar"
+			},
+			{
+				"name": "price",
+				"type": "decimal",
+				"precision": 10,
+				"scale": 2
+			}
+		],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "tbl_products_sink"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

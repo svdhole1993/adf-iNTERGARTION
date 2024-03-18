@@ -1,0 +1,216 @@
+{
+	"name": "calling mul tablesuingpara",
+	"properties": {
+		"activities": [
+			{
+				"name": "Copy  dec table",
+				"type": "Copy",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "DelimitedTextSource",
+						"storeSettings": {
+							"type": "AzureBlobFSReadSettings",
+							"recursive": true,
+							"enablePartitionDiscovery": false
+						},
+						"formatSettings": {
+							"type": "DelimitedTextReadSettings"
+						}
+					},
+					"sink": {
+						"type": "DelimitedTextSink",
+						"storeSettings": {
+							"type": "AzureBlobFSWriteSettings"
+						},
+						"formatSettings": {
+							"type": "DelimitedTextWriteSettings",
+							"quoteAllText": true,
+							"fileExtension": ".txt"
+						}
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "ParamDelimitedText1Step2",
+						"type": "DatasetReference",
+						"parameters": {
+							"Filename": "Sales_DEC_2022.csv"
+						}
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "parameteroutputDelimitedText1",
+						"type": "DatasetReference",
+						"parameters": {
+							"pfile": "Decsales.scv"
+						}
+					}
+				]
+			},
+			{
+				"name": "Copy feb",
+				"type": "Copy",
+				"dependsOn": [
+					{
+						"activity": "Copy  dec table",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "DelimitedTextSource",
+						"storeSettings": {
+							"type": "AzureBlobFSReadSettings",
+							"recursive": true,
+							"enablePartitionDiscovery": false
+						},
+						"formatSettings": {
+							"type": "DelimitedTextReadSettings"
+						}
+					},
+					"sink": {
+						"type": "DelimitedTextSink",
+						"storeSettings": {
+							"type": "AzureBlobFSWriteSettings"
+						},
+						"formatSettings": {
+							"type": "DelimitedTextWriteSettings",
+							"quoteAllText": true,
+							"fileExtension": ".txt"
+						}
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "ParamDelimitedText1Step2",
+						"type": "DatasetReference",
+						"parameters": {
+							"Filename": "Sales_FEB_2023.csv"
+						}
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "parameteroutputDelimitedText1",
+						"type": "DatasetReference",
+						"parameters": {
+							"pfile": "Febsales.scv"
+						}
+					}
+				]
+			},
+			{
+				"name": "Copyjan",
+				"type": "Copy",
+				"dependsOn": [
+					{
+						"activity": "Copy feb",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "DelimitedTextSource",
+						"storeSettings": {
+							"type": "AzureBlobFSReadSettings",
+							"recursive": true,
+							"enablePartitionDiscovery": false
+						},
+						"formatSettings": {
+							"type": "DelimitedTextReadSettings"
+						}
+					},
+					"sink": {
+						"type": "DelimitedTextSink",
+						"storeSettings": {
+							"type": "AzureBlobFSWriteSettings"
+						},
+						"formatSettings": {
+							"type": "DelimitedTextWriteSettings",
+							"quoteAllText": true,
+							"fileExtension": ".txt"
+						}
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "ParamDelimitedText1Step2",
+						"type": "DatasetReference",
+						"parameters": {
+							"Filename": "Sales_JAN_2023.csv"
+						}
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "parameteroutputDelimitedText1",
+						"type": "DatasetReference",
+						"parameters": {
+							"pfile": "jansales.scv"
+						}
+					}
+				]
+			}
+		],
+		"annotations": [],
+		"lastPublishTime": "2024-03-12T09:36:15Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

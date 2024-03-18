@@ -1,0 +1,55 @@
+{
+	"name": "dataflowPrac",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "DFelimitedText1",
+						"type": "DatasetReference"
+					},
+					"name": "CopyCustomer"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "StoreDFdata",
+						"type": "DatasetReference"
+					},
+					"name": "customerMDF"
+				}
+			],
+			"transformations": [],
+			"scriptLines": [
+				"source(output(",
+				"          customer_id as string,",
+				"          Customerslastname as string,",
+				"          Customersfirstname as string,",
+				"          CustomersCountry as string,",
+				"          Customersage as string,",
+				"          Customersgender as string,",
+				"          Customersemail as string,",
+				"          Customersprofession as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> CopyCustomer",
+				"CopyCustomer sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     input(",
+				"          id as string,",
+				"          Name as string,",
+				"          age as string,",
+				"          Address_id as string,",
+				"          Sales_id as string",
+				"     ),",
+				"     partitionFileNames:['mfdCustomer.csv'],",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     partitionBy('hash', 1)) ~> customerMDF"
+			]
+		}
+	}
+}
