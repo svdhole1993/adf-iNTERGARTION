@@ -1,0 +1,71 @@
+{
+	"$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"value": "sddf"
+		},
+		"AzureDataLakeStorage1_accountKey": {
+			"value": ""
+		},
+		"Git_connectionString": {
+			"value": ""
+		},
+		"LS_AzureSqlDatabase1_connectionString": {
+			"value": ""
+		},
+		"MDFLINkS_connectionString": {
+			"value": ""
+		},
+		"Setp2sqldatabasesourse_connectionString": {
+			"value": ""
+		},
+		"SourceSqlAdventure_connectionString": {
+			"value": ""
+		},
+		"paramterlinkAzureDataLakeStorageS2_accountKey": {
+			"value": ""
+		},
+		"paraoutputAzureDataLakeStorage2_accountKey": {
+			"value": ""
+		},
+		"step2BlobStorage1_connectionString": {
+			"value": ""
+		},
+		"AmazonS31_properties_typeProperties_accessKeyId": {
+			"value": {
+				"type": "AzureKeyVaultSecret",
+				"store": {
+					"referenceName": "AzureKeyVault1azuews3",
+					"type": "LinkedServiceReference"
+				},
+				"secretName": "awsmanger"
+			}
+		},
+		"AzureDataLakeStorage1_properties_typeProperties_url": {
+			"value": "https://sdsa1.dfs.core.windows.net/"
+		},
+		"AzureKeyVault1azuews3_properties_typeProperties_baseUrl": {
+			"value": "https://svd123.vault.azure.net/"
+		},
+		"S3_ls_properties_typeProperties_accessKeyId": {
+			"value": {
+				"type": "AzureKeyVaultSecret",
+				"store": {
+					"referenceName": "s3akv",
+					"type": "LinkedServiceReference"
+				},
+				"secretName": "awskey1"
+			}
+		},
+		"paramterlinkAzureDataLakeStorageS2_properties_typeProperties_url": {
+			"value": "https://adfgen231.dfs.core.windows.net/"
+		},
+		"paraoutputAzureDataLakeStorage2_properties_typeProperties_url": {
+			"value": "https://adfgen231.dfs.core.windows.net/"
+		},
+		"s3akv_properties_typeProperties_baseUrl": {
+			"value": "https://svd123.vault.azure.net/"
+		}
+	}
+}

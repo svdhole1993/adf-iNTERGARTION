@@ -1,0 +1,208 @@
+{
+	"$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"type": "string",
+			"metadata": "Data Factory name",
+			"defaultValue": "sddf"
+		},
+		"AzureDataLakeStorage1_accountKey": {
+			"type": "secureString",
+			"metadata": "Secure string for 'accountKey' of 'AzureDataLakeStorage1'"
+		},
+		"Git_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'Git'"
+		},
+		"LS_AzureSqlDatabase1_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'LS_AzureSqlDatabase1'"
+		},
+		"MDFLINkS_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'MDFLINkS'"
+		},
+		"Setp2sqldatabasesourse_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'Setp2sqldatabasesourse'"
+		},
+		"SourceSqlAdventure_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'SourceSqlAdventure'"
+		},
+		"paramterlinkAzureDataLakeStorageS2_accountKey": {
+			"type": "secureString",
+			"metadata": "Secure string for 'accountKey' of 'paramterlinkAzureDataLakeStorageS2'"
+		},
+		"paraoutputAzureDataLakeStorage2_accountKey": {
+			"type": "secureString",
+			"metadata": "Secure string for 'accountKey' of 'paraoutputAzureDataLakeStorage2'"
+		},
+		"step2BlobStorage1_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'step2BlobStorage1'"
+		},
+		"AmazonS31_properties_typeProperties_accessKeyId": {
+			"type": "object",
+			"defaultValue": {
+				"type": "AzureKeyVaultSecret",
+				"store": {
+					"referenceName": "AzureKeyVault1azuews3",
+					"type": "LinkedServiceReference"
+				},
+				"secretName": "awsmanger"
+			}
+		},
+		"AzureDataLakeStorage1_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "https://sdsa1.dfs.core.windows.net/"
+		},
+		"AzureKeyVault1azuews3_properties_typeProperties_baseUrl": {
+			"type": "string",
+			"defaultValue": "https://svd123.vault.azure.net/"
+		},
+		"S3_ls_properties_typeProperties_accessKeyId": {
+			"type": "object",
+			"defaultValue": {
+				"type": "AzureKeyVaultSecret",
+				"store": {
+					"referenceName": "s3akv",
+					"type": "LinkedServiceReference"
+				},
+				"secretName": "awskey1"
+			}
+		},
+		"paramterlinkAzureDataLakeStorageS2_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "https://adfgen231.dfs.core.windows.net/"
+		},
+		"paraoutputAzureDataLakeStorage2_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "https://adfgen231.dfs.core.windows.net/"
+		},
+		"s3akv_properties_typeProperties_baseUrl": {
+			"type": "string",
+			"defaultValue": "https://svd123.vault.azure.net/"
+		},
+		"containerUri": {
+			"type": "string",
+			"metadata": "URI to storage account containing linked ARM templates"
+		},
+		"containerSasToken": {
+			"type": "string",
+			"metadata": "Sas token to storage account containing linked ARM templates"
+		}
+	},
+	"variables": {
+		"factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
+	},
+	"resources": [
+		{
+			"name": "sddf_ArmTemplate_0",
+			"type": "Microsoft.Resources/deployments",
+			"apiVersion": "2018-02-01",
+			"properties": {
+				"mode": "incremental",
+				"templateLink": {
+					"uri": "[concat(parameters('containerUri'), '/ArmTemplate_0.json', parameters('containerSasToken'))]",
+					"contentVersion": "1.0.0.0"
+				},
+				"parameters": {
+					"factoryName": {
+						"value": "[parameters('factoryName')]"
+					},
+					"AzureDataLakeStorage1_accountKey": {
+						"value": "[parameters('AzureDataLakeStorage1_accountKey')]"
+					},
+					"Git_connectionString": {
+						"value": "[parameters('Git_connectionString')]"
+					},
+					"MDFLINkS_connectionString": {
+						"value": "[parameters('MDFLINkS_connectionString')]"
+					},
+					"Setp2sqldatabasesourse_connectionString": {
+						"value": "[parameters('Setp2sqldatabasesourse_connectionString')]"
+					},
+					"SourceSqlAdventure_connectionString": {
+						"value": "[parameters('SourceSqlAdventure_connectionString')]"
+					},
+					"paramterlinkAzureDataLakeStorageS2_accountKey": {
+						"value": "[parameters('paramterlinkAzureDataLakeStorageS2_accountKey')]"
+					},
+					"paraoutputAzureDataLakeStorage2_accountKey": {
+						"value": "[parameters('paraoutputAzureDataLakeStorage2_accountKey')]"
+					},
+					"step2BlobStorage1_connectionString": {
+						"value": "[parameters('step2BlobStorage1_connectionString')]"
+					},
+					"AzureDataLakeStorage1_properties_typeProperties_url": {
+						"value": "[parameters('AzureDataLakeStorage1_properties_typeProperties_url')]"
+					},
+					"AzureKeyVault1azuews3_properties_typeProperties_baseUrl": {
+						"value": "[parameters('AzureKeyVault1azuews3_properties_typeProperties_baseUrl')]"
+					},
+					"paramterlinkAzureDataLakeStorageS2_properties_typeProperties_url": {
+						"value": "[parameters('paramterlinkAzureDataLakeStorageS2_properties_typeProperties_url')]"
+					},
+					"paraoutputAzureDataLakeStorage2_properties_typeProperties_url": {
+						"value": "[parameters('paraoutputAzureDataLakeStorage2_properties_typeProperties_url')]"
+					},
+					"s3akv_properties_typeProperties_baseUrl": {
+						"value": "[parameters('s3akv_properties_typeProperties_baseUrl')]"
+					}
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "sddf_ArmTemplate_1",
+			"type": "Microsoft.Resources/deployments",
+			"apiVersion": "2018-02-01",
+			"properties": {
+				"mode": "incremental",
+				"templateLink": {
+					"uri": "[concat(parameters('containerUri'), '/ArmTemplate_1.json', parameters('containerSasToken'))]",
+					"contentVersion": "1.0.0.0"
+				},
+				"parameters": {
+					"factoryName": {
+						"value": "[parameters('factoryName')]"
+					},
+					"LS_AzureSqlDatabase1_connectionString": {
+						"value": "[parameters('LS_AzureSqlDatabase1_connectionString')]"
+					},
+					"AmazonS31_properties_typeProperties_accessKeyId": {
+						"value": "[parameters('AmazonS31_properties_typeProperties_accessKeyId')]"
+					},
+					"S3_ls_properties_typeProperties_accessKeyId": {
+						"value": "[parameters('S3_ls_properties_typeProperties_accessKeyId')]"
+					}
+				}
+			},
+			"dependsOn": [
+				"[resourceId('Microsoft.Resources/deployments', 'sddf_ArmTemplate_0')]"
+			]
+		},
+		{
+			"name": "sddf_ArmTemplate_2",
+			"type": "Microsoft.Resources/deployments",
+			"apiVersion": "2018-02-01",
+			"properties": {
+				"mode": "incremental",
+				"templateLink": {
+					"uri": "[concat(parameters('containerUri'), '/ArmTemplate_2.json', parameters('containerSasToken'))]",
+					"contentVersion": "1.0.0.0"
+				},
+				"parameters": {
+					"factoryName": {
+						"value": "[parameters('factoryName')]"
+					}
+				}
+			},
+			"dependsOn": [
+				"[resourceId('Microsoft.Resources/deployments', 'sddf_ArmTemplate_1')]"
+			]
+		}
+	]
+}
