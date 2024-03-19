@@ -1,0 +1,45 @@
+{
+	"name": "readgithubfile",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "gitstoragedetalake",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileName": "Git uplod file.csv",
+				"folderPath": "demo",
+				"fileSystem": "data"
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": [
+			{
+				"name": "No",
+				"type": "String"
+			},
+			{
+				"name": "Full URL",
+				"type": "String"
+			},
+			{
+				"name": "base URL",
+				"type": "String"
+			},
+			{
+				"name": "SourseReletiveURL",
+				"type": "String"
+			},
+			{
+				"name": "File Name",
+				"type": "String"
+			}
+		]
+	}
+}
